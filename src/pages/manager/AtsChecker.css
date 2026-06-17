@@ -1,0 +1,477 @@
+/* ══════════════════════════════════════
+   ATS CHECKER PAGE — FULL REWRITE
+   Supports: Bulk Mode + Single Mode
+══════════════════════════════════════ */
+
+.ac-page {
+  padding: 24px;
+  background: #f0f4fb;
+  min-height: 100vh;
+}
+
+.ac-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Header ────────────────────────────────────────── */
+.ac-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ac-header-icon { font-size: 32px; flex-shrink: 0; }
+.ac-header h1   { font-size: 20px; font-weight: 700; color: #111827; margin: 0 0 4px; }
+.ac-header p    { font-size: 13px; color: #6b7280; margin: 0; }
+
+/* ── View toggle ────────────────────────────────────── */
+.ac-view-toggle {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  align-self: center;
+  flex-shrink: 0;
+}
+.ac-toggle-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.ac-toggle-btn.active,
+.ac-toggle-btn:hover {
+  background: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+}
+
+/* ── Rules strip ─────────────────────────────────────── */
+.ac-rules-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #f8f9ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.ac-rule-item  { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+.ac-rule-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+.ac-rule-label { color: #374151; }
+
+/* ── Dashboard Summary Grid ──────────────────────────── */
+.ac-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.ac-summary-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  transition: transform .15s, box-shadow .15s;
+}
+.ac-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.ac-summary-icon  { font-size: 22px; margin-bottom: 6px; }
+.ac-summary-value { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.ac-summary-label { font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing:.04em; }
+
+/* ── Bulk Action Buttons ─────────────────────────────── */
+.ac-bulk-actions {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ac-analyze-btn,
+.ac-process-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 200px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  position: relative;
+}
+.ac-analyze-btn {
+  background: #4f46e5;
+  color: #fff;
+}
+.ac-analyze-btn:hover:not(:disabled) { background: #4338ca; transform: translateY(-1px); }
+
+.ac-process-btn {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: #fff;
+}
+.ac-process-btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+
+.ac-analyze-btn:disabled,
+.ac-process-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ac-btn-sub {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: .8;
+}
+
+/* ── Progress bar ─────────────────────────────────────── */
+.ac-progress-wrap    { margin-top: 16px; }
+.ac-progress-header  { display: flex; justify-content: space-between; font-size: 12px; color: #6b7280; margin-bottom: 6px; }
+.ac-progress-track   { height: 8px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+.ac-progress-fill    { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 99px; transition: width .3s ease; }
+
+/* ── Bulk result banner ───────────────────────────────── */
+.ac-bulk-banner {
+  background: #f8f9ff;
+  border: 1.5px solid #c7d2fe;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.ac-bulk-banner.saved {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+.ac-bulk-banner-main {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin-bottom: 10px;
+}
+.ac-bulk-banner.saved .ac-bulk-banner-main { color: #14532d; }
+.ac-bulk-banner-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.ac-bulk-banner-msg { font-size: 12px; color: #6b7280; }
+
+/* ── Table ────────────────────────────────────────────── */
+.ac-table-wrap { background:#fff; border-radius:12px; border:1.5px solid #e5e7eb; overflow:hidden; }
+.ac-table-toolbar {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ac-search-input {
+  flex: 1;
+  min-width: 180px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #111827;
+  background: #f9fafb;
+  outline: none;
+}
+.ac-search-input:focus { border-color: #6366f1; background: #fff; }
+.ac-filter-select {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  color: #374151;
+  background: #f9fafb;
+  cursor: pointer;
+  outline: none;
+}
+.ac-count-badge {
+  font-size: 12px;
+  font-weight: 700;
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.ac-table-scroll { overflow-x: auto; }
+
+/* BUG FIX: this file used to style `.ac-table th` / `.ac-table td`, rules
+   for a real HTML <table>. The JSX was refactored to a div-based "virtual
+   table" (`.ac-vtable` / `.ac-vtable-row` / `.ac-vtable-cell`) so react-window
+   could absolutely-position rows for virtualization, but the CSS was never
+   updated to match. With no layout rules, every `.ac-vtable-cell` div fell
+   back to default block display and stacked full-width on its own line —
+   which is exactly the broken vertical layout in the screenshot. Fixed by
+   giving both the header row and data rows a shared CSS Grid template so
+   columns actually line up. */
+.ac-vtable { width: 100%; }
+
+.ac-vtable-row {
+  display: grid;
+  grid-template-columns: 36px minmax(140px,1.3fr) minmax(160px,1.1fr) minmax(110px,0.9fr) 120px 170px 110px;
+  align-items: center;
+  column-gap: 14px;
+  padding: 0 16px;
+  height: 64px; /* must match RESULT_ROW_HEIGHT in AtsChecker.jsx */
+  border-bottom: 1px solid #f3f4f6;
+  min-width: 820px;
+}
+.ac-vtable-row:hover { background: #fafbff; }
+.ac-vtable-row.ac-row-skipped { opacity: .6; }
+
+.ac-vtable-row.ac-vtable-header {
+  height: 44px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #6b7280;
+}
+.ac-vtable-row.ac-vtable-header:hover { background: #f9fafb; }
+
+.ac-vtable-cell {
+  font-size: 13px;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ac-sortable { cursor: pointer; user-select: none; }
+.ac-sortable:hover { color: #4f46e5; }
+
+.ac-td-num   { color: #9ca3af; }
+.ac-td-email { color: #6b7280; font-size: 12px; }
+.ac-td-file  { color: #9ca3af; font-size: 12px; }
+
+.ac-candidate-cell { display: flex; align-items: center; gap: 8px; }
+.ac-cand-name      { font-weight: 600; color: #111827; }
+.ac-cand-email     { font-size: 12px; color: #6b7280; }
+.ac-cand-file      { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.ac-cand-details   { display: flex; flex-direction: column; }
+
+.ac-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.ac-score-cell { display: flex; align-items: center; gap: 6px; }
+.ac-no-text-warn { font-size: 10px; color: #d97706; font-weight: 600; }
+
+.ac-match-bar-wrap  { display: flex; align-items: center; gap: 8px; }
+.ac-match-bar-track { flex: 1; height: 6px; background: #e5e7eb; border-radius: 99px; overflow: hidden; min-width: 60px; }
+.ac-match-bar-fill  { height: 100%; border-radius: 99px; transition: width .5s ease; }
+.ac-match-pct       { font-size: 12px; font-weight: 700; color: #374151; white-space: nowrap; }
+
+/* Status badge */
+.ac-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Loading card ─────────────────────────────────────── */
+.ac-loading-card {
+  text-align: center;
+  background: #fff;
+  border: 1.5px solid #e0e7ff;
+  border-radius: 14px;
+  padding: 40px 24px;
+  margin-bottom: 20px;
+}
+.ac-loading-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid #e0e7ff;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: ac-spin .65s linear infinite;
+  margin: 0 auto 16px;
+}
+.ac-loading-card h3 { font-size: 16px; font-weight: 600; color: #1e1b4b; margin: 0 0 6px; }
+.ac-loading-card p  { font-size: 13px; color: #6b7280; margin: 0 0 16px; }
+
+@keyframes ac-spin { to { transform: rotate(360deg); } }
+
+/* ── Spinner inside button ─────────────────────────────── */
+.ac-btn-spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2.5px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ac-spin .6s linear infinite;
+}
+
+/* ── Error ─────────────────────────────────────────────── */
+.ac-error {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* ── Single mode ──────────────────────────────────────── */
+.ac-input-card {
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.ac-input-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ac-input-icon { font-size: 22px; flex-shrink: 0; }
+.ac-input-label h3 { font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 2px; }
+.ac-input-label p  { font-size: 12px; color: #6b7280; margin: 0; }
+
+.ac-candidates-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.ac-candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+}
+.ac-candidate-row .ac-cand-details { flex: 1; }
+
+.ac-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ac-reset-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .15s;
+}
+.ac-reset-btn:hover { background: #e5e7eb; }
+
+.ac-run-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.ac-run-btn:hover:not(:disabled) { background: #4f46e5; }
+.ac-run-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ── Single result ─────────────────────────────────────── */
+.ac-result { background:#fff; border:1.5px solid #e5e7eb; border-radius:14px; overflow:hidden; }
+.ac-result-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #f8f9ff;
+  border-bottom: 1px solid #e0e7ff;
+}
+.ac-result-top h2 { font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 4px; }
+.ac-result-top p  { font-size: 13px; color: #6b7280; margin: 0 0 8px; }
+.ac-result-body   { padding: 20px 24px; }
+
+/* Score ring */
+.ac-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ac-ring-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.ac-ring-num   { font-weight: 800; }
+.ac-ring-denom { font-size: 10px; color: #9ca3af; }
+
+/* Keywords */
+.ac-keywords-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+.ac-section      { margin-bottom: 18px; }
+.ac-section h4   { font-size: 13px; font-weight: 700; color: #374151; margin: 0 0 10px; }
+.ac-chips        { display: flex; flex-wrap: wrap; gap: 6px; }
+.ac-chip         { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; }
+.ac-chip-match   { background: #dcfce7; color: #15803d; }
+.ac-chip-miss    { background: #fee2e2; color: #dc2626; }
+
+.ac-suggestions  { display: flex; flex-direction: column; gap: 8px; }
+.ac-suggestion   { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #374151; }
+.ac-suggestion-arrow { color: #6366f1; font-weight: 700; flex-shrink: 0; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ac-page { padding: 12px; }
+  .ac-summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .ac-keywords-row { grid-template-columns: 1fr; }
+  .ac-bulk-actions { flex-direction: column; }
+  .ac-view-toggle  { width: 100%; margin-left: 0; }
+  .ac-toggle-btn   { flex: 1; }
+}

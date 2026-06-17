@@ -1,0 +1,261 @@
+/* ══════════════════════════════════════════════════════════
+   MyApplications — page layout
+   ══════════════════════════════════════════════════════════ */
+
+/* Two-column layout: content | docked chat panel */
+.apps-page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  min-height: calc(100vh - 60px);
+  padding: 28px 32px;
+  max-width: 1400px;
+  box-sizing: border-box;
+  transition: gap 0.25s ease;
+}
+
+/* Content area shrinks when chat is open */
+.apps-content-area {
+  flex: 1;
+  min-width: 0;
+  transition: flex 0.25s ease;
+}
+
+/* ── Docked chat panel ───────────────────────────── */
+.apps-chat-panel {
+  width: 380px;
+  min-width: 340px;
+  max-width: 420px;
+  flex-shrink: 0;
+  margin-left: 24px;
+  /* Stick to the top of the content area */
+  position: sticky;
+  top: 80px;               /* below the fixed Navbar */
+  height: calc(100vh - 104px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.14), 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+  /* Slide in from the right */
+  animation: chatPanelSlideIn 0.25s ease;
+}
+
+@keyframes chatPanelSlideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Make the embedded ChatWindow fill the full panel height */
+.apps-chat-panel .chat-window--embedded {
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+/* ── Page header ─────────────────────────────────── */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-900, #111827);
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  font-size: 13px;
+  color: var(--gray-500, #6b7280);
+}
+
+/* ── Empty State ─────────────────────────────────── */
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-weight: 600;
+  color: var(--gray-600, #4b5563);
+  margin-bottom: 6px;
+}
+
+.empty-subtitle {
+  font-size: 13px;
+  color: var(--gray-500, #6b7280);
+}
+
+/* ── Shortlisted banner ──────────────────────────── */
+.shortlisted-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1.5px solid #6ee7b7;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #065f46;
+}
+
+.shortlisted-banner-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* ── Applications Card ───────────────────────────── */
+.applications-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+}
+
+.applications-table thead {
+  background: var(--gray-100, #f3f4f6);
+}
+
+.applications-table th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-600, #4b5563);
+  border-bottom: 1px solid var(--gray-200, #e5e7eb);
+  white-space: nowrap;
+}
+
+.applications-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray-100, #f3f4f6);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Cells */
+.job-title-cell {
+  font-weight: 600;
+  color: var(--brand-blue, #2563eb);
+}
+
+.company-cell {
+  font-weight: 500;
+  color: var(--gray-700, #374151);
+}
+
+.date-cell {
+  color: var(--gray-400, #9ca3af);
+  font-size: 13px;
+}
+
+/* Row states */
+.applications-table tbody tr:hover {
+  background: var(--gray-50, #f9fafb);
+  transition: background 0.15s ease;
+}
+
+.row-shortlisted {
+  background: #f0fdf4;
+}
+
+.row-shortlisted:hover {
+  background: #dcfce7 !important;
+}
+
+/* Highlight the row whose chat is currently open */
+.row-chat-active {
+  background: #eff6ff !important;
+  border-left: 3px solid #2563eb;
+}
+
+/* ── Interact button ─────────────────────────────── */
+.btn-interact {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.12s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.btn-interact:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn-interact:active {
+  transform: translateY(0);
+}
+
+/* When chat for this row is already open — show "Close Chat" style */
+.btn-interact--active {
+  background: linear-gradient(135deg, #64748b, #475569);
+  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);
+}
+
+.btn-interact--active:hover {
+  box-shadow: 0 4px 14px rgba(100, 116, 139, 0.4);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+/* Medium screens: narrow the chat panel */
+@media (max-width: 1100px) {
+  .apps-chat-panel {
+    width: 320px;
+    min-width: 300px;
+  }
+}
+
+/* Small screens: stack vertically, chat panel full-width below content */
+@media (max-width: 768px) {
+  .apps-page-layout {
+    flex-direction: column;
+    padding: 16px;
+    gap: 0;
+  }
+
+  .apps-chat-panel {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    margin-left: 0;
+    margin-top: 20px;
+    position: static;      /* not sticky on mobile */
+    height: 480px;
+    border-radius: 16px;
+    top: auto;
+  }
+
+  .apps-chat-panel .chat-window--embedded {
+    height: 100%;
+    border-radius: 16px;
+  }
+
+  .applications-table {
+    min-width: 360px;
+  }
+
+  .applications-table th,
+  .applications-table td {
+    padding: 12px;
+    font-size: 13px;
+  }
+}

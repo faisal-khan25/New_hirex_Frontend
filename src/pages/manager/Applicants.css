@@ -1,0 +1,307 @@
+/* ═══════════════════════════════════════════
+   APPLICANTS PAGE — LAYOUT
+═══════════════════════════════════════════ */
+.apps-layout {
+  display: flex;
+  min-height: calc(100vh - 64px);
+  background: #f0f4fb;
+}
+
+/* ─── Job Sidebar ──────────────────────────── */
+.apps-sidebar {
+  width: 260px;
+  min-width: 220px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px 14px;
+  overflow-y: auto;
+}
+.apps-sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #6b7280;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.apps-sidebar-icon { font-size: 15px; }
+.apps-sidebar-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+  padding: 24px 0;
+}
+.apps-job-card {
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.apps-job-card:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 2px 8px rgba(37,99,235,.08);
+}
+.apps-job-active {
+  border-color: #2563eb !important;
+  background: #eff6ff !important;
+}
+.apps-job-title { font-size: 13px; font-weight: 600; color: #111827; line-height: 1.3; }
+.apps-job-loc   { font-size: 11px; color: #6b7280; margin-top: 3px; }
+
+/* ─── Main content ─────────────────────────── */
+.apps-main {
+  flex: 1;
+  padding: 24px 28px;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.apps-loading {
+  padding: 40px;
+  color: #6b7280;
+  font-size: 14px;
+}
+.apps-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  color: #6b7280;
+}
+.apps-empty-icon { font-size: 40px; margin-bottom: 14px; }
+.apps-empty-state h2 { font-size: 20px; font-weight: 700; color: #374151; margin-bottom: 8px; }
+.apps-empty-state p  { font-size: 14px; max-width: 320px; }
+
+.apps-no-apps { text-align: center; padding: 48px 0; color: #9ca3af; font-size: 14px; }
+
+.apps-loading-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 20px 0;
+}
+.apps-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: apps-spin .65s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes apps-spin { to { transform: rotate(360deg); } }
+
+.apps-page-header { margin-bottom: 16px; }
+.apps-page-header h1 { font-size: 22px; font-weight: 700; color: #111827; margin: 0; }
+.apps-page-header p  { font-size: 13px; color: #6b7280; margin: 3px 0 0; }
+
+/* ─── Status tab pills ──────────────────────── */
+.apps-status-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.apps-tab-btn {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.apps-tab-btn:hover { border-color: #6366f1; color: #6366f1; }
+.apps-tab-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+.apps-tab-count {
+  display: inline-block;
+  background: rgba(255,255,255,.25);
+  color: inherit;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  margin-left: 2px;
+}
+.apps-tab-btn:not(.active) .apps-tab-count {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* ─── Search + sort toolbar ─────────────────── */
+.apps-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.apps-search-input {
+  flex: 1;
+  min-width: 180px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #111827;
+  background: #f9fafb;
+  outline: none;
+}
+.apps-search-input:focus { border-color: #6366f1; background: #fff; }
+.apps-sort-select {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  color: #374151;
+  background: #f9fafb;
+  cursor: pointer;
+  outline: none;
+}
+
+/* ─── Applicant card ────────────────────────── */
+.apps-card {
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  transition: box-shadow .15s, border-color .15s;
+}
+.apps-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.07); }
+
+.apps-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.apps-candidate-info { display: flex; align-items: center; gap: 12px; }
+.apps-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.apps-name  { font-size: 15px; font-weight: 600; color: #111827; }
+.apps-email { font-size: 12px; color: #6b7280; }
+.apps-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.apps-applied-at { font-size: 11px; color: #9ca3af; }
+
+/* ─── ATS row ───────────────────────────────── */
+.apps-ats-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f8f9ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.apps-ats-label { font-size: 12px; font-weight: 700; color: #4f46e5; white-space: nowrap; flex-shrink: 0; }
+.apps-match-pct { font-size: 12px; font-weight: 700; color: #374151; white-space: nowrap; }
+
+/* ─── Resume row ────────────────────────────── */
+.apps-resume-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.apps-resume-label { color: #6b7280; }
+.apps-resume-link  { color: #2563eb; text-decoration: none; font-weight: 500; }
+.apps-resume-link:hover { text-decoration: underline; }
+.apps-no-resume    { color: #9ca3af; font-size: 12px; font-style: italic; }
+
+.apps-resume-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0f1fa;
+  border: 1px solid #d4d6ee;
+  color: #4f46e5;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background .15s;
+}
+.apps-resume-download:hover { background: #e8eaf6; border-color: #4f46e5; }
+
+/* ─── Cover letter ──────────────────────────── */
+.apps-cover {
+  font-size: 13px;
+  color: #374151;
+  background: #f9fafb;
+  border-left: 3px solid #e5e7eb;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ─── Action buttons ────────────────────────── */
+.apps-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+.apps-shortlist-btn {
+  background: #dcfce7; color: #16a34a;
+  border: 1.5px solid #bbf7d0; border-radius: 8px;
+  padding: 7px 14px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: .15s;
+}
+.apps-shortlist-btn:hover:not(:disabled) { background: #16a34a; color: #fff; }
+.apps-shortlist-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.apps-reject-btn {
+  background: #fee2e2; color: #dc2626;
+  border: 1.5px solid #fecaca; border-radius: 8px;
+  padding: 7px 14px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: .15s;
+}
+.apps-reject-btn:hover:not(:disabled) { background: #dc2626; color: #fff; }
+.apps-reject-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.apps-hire-btn {
+  background: #f3e8ff; color: #7c3aed;
+  border: 1.5px solid #e9d5ff; border-radius: 8px;
+  padding: 7px 14px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: .15s;
+}
+.apps-hire-btn:hover:not(:disabled) { background: #7c3aed; color: #fff; }
+.apps-hire-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ─── Responsive ─────────────────────────────── */
+@media (max-width: 900px) {
+  .apps-layout    { flex-direction: column; }
+  .apps-sidebar   { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid #e5e7eb; max-height: 220px; overflow-y: auto; }
+  .apps-main      { padding: 14px 16px; }
+}
